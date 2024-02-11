@@ -18,7 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn('min-h-screen font-sans', inter.className)}>
+      <body
+        className={cn(
+          'min-h-screen font-sans body-bg antialiased',
+          inter.className
+        )}
+      >
         <Navbar />
         {children}
       </body>
