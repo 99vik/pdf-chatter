@@ -4,6 +4,10 @@ export default async function Page() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-  console.log(user);
-  return <p>Dashboard</p>;
+  return (
+    <>
+      <p> Dashboard</p>
+      <p>{JSON.stringify(user)}</p>
+    </>
+  );
 }

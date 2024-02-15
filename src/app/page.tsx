@@ -1,5 +1,4 @@
 import { buttonVariants } from '@/components/ui/button';
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
