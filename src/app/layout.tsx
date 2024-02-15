@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          'min-h-screen font-sans body-bg antialiased scrollbar-narrow scrollbar-thin scrollbar-primary',
+          'min-h-screen overflow-y-scroll bg-neutral-100 font-sans body-bg antialiased scrollbar-narrow scrollbar-thin scrollbar-primary',
           inter.className
         )}
       >
