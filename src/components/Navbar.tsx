@@ -3,6 +3,7 @@ import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import Link from 'next/link';
 import { Button } from './ui/button';
 import UserMenu from './UserMenu';
+import DashboardLink from './DashboardLink';
 
 export default async function Navbar() {
   const { getUser } = getKindeServerSession();
@@ -20,13 +21,7 @@ export default async function Navbar() {
           </LoginLink>
         ) : (
           <div className="flex justify-center items-center gap-6 sm:gap-10">
-            <Link
-              href="/dashboard"
-              className="text-zinc-700 font-semibold group"
-            >
-              Dashboard
-              <span className="block mx-auto w-0 group-hover:w-full duration-300 ease-out h-0.5 rounded-full bg-primary/90"></span>
-            </Link>
+            <DashboardLink />
             <UserMenu />
           </div>
         )}

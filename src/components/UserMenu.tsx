@@ -1,4 +1,4 @@
-import { User } from 'lucide-react';
+import { LogOut, User } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,12 +27,18 @@ export default function UserMenu() {
 
         <DropdownMenuSeparator className="bg-zinc-200" />
 
-        <DropdownMenuItem asChild className="cursor-pointer font-semibold">
-          <Link href="/account">Account</Link>
+        <DropdownMenuItem asChild className="cursor-pointer">
+          <Link href="/account" className="flex gap-2">
+            <User strokeWidth={1.25} className="h-5 w-5" />
+            Account
+          </Link>
         </DropdownMenuItem>
 
-        <DropdownMenuItem className="text-white focus:text-white font-semibold bg-red-500 focus:bg-red-500/80 hover:bg-primary cursor-pointer">
-          <LogoutLink>Sign out</LogoutLink>
+        <DropdownMenuItem className="cursor-pointer ">
+          <LogoutLink className="flex gap-2">
+            <LogOut strokeWidth={1.25} className="h-5 w-5" />
+            Log out
+          </LogoutLink>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
