@@ -8,9 +8,6 @@ import { usePathname } from 'next/navigation';
 export default function DashboardLink() {
   const route = usePathname();
 
-  const users = trpc.getUsers.useQuery();
-  if (users.data) console.log(users.data[0].email);
-
   return (
     <Link href="/dashboard" className="text-zinc-700 font-semibold group">
       Dashboard
