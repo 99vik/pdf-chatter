@@ -1,7 +1,24 @@
+'use client';
+
 import { Loader2 } from 'lucide-react';
 import { trpc } from '../_trpc/client';
+import { redirect } from 'next/navigation';
+import { useToast } from '@/components/ui/use-toast';
 
 export default function Page() {
+  const { isSuccess, isError } = trpc.authCallback.useQuery();
+  const { toast } = useToast();
+
+  if (isSuccess) redirect('/dashboard');
+  if (isError) {
+    toast({
+      variant: 'destructive',
+      title: 'Uh oh! Something went wrong.',
+      description: 'There was a problem with your request.',
+    });
+    redirect('/');
+  }
+
   return (
     <div className="mt-20 flex-col flex items-center gap-4 text-center">
       <Loader2 className="h-28 w-28 text-primary/80 animate-spin" />
