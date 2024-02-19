@@ -10,7 +10,13 @@ import {
 import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/components';
 import Link from 'next/link';
 
-export default function UserMenu() {
+export default function UserMenu({
+  name,
+  email,
+}: {
+  name: String;
+  email: String;
+}) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -19,10 +25,8 @@ export default function UserMenu() {
 
       <DropdownMenuContent>
         <DropdownMenuLabel>
-          <p>User name</p>
-          <p className="text-zinc-600 text-xs font-normal">
-            examplemail@mail.com
-          </p>
+          <p>{name}</p>
+          <p className="text-zinc-600 text-xs font-normal">{email}</p>
         </DropdownMenuLabel>
 
         <DropdownMenuSeparator className="bg-zinc-200" />

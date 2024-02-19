@@ -22,7 +22,10 @@ export default async function Navbar() {
         ) : (
           <div className="flex justify-center items-center gap-6 sm:gap-10">
             <DashboardLink />
-            <UserMenu />
+            <UserMenu
+              name={user.family_name! + ' ' + user.given_name!}
+              email={user.email!}
+            />
           </div>
         )}
       </div>

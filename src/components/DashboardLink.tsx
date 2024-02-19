@@ -1,6 +1,5 @@
 'use client';
 
-import { trpc } from '@/app/_trpc/client';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -15,7 +14,7 @@ export default function DashboardLink() {
         className={cn(
           'block mx-auto w-0 group-hover:w-full duration-300 ease-out h-0.5 rounded-full bg-primary/90',
           {
-            'w-full': route === '/dashboard',
+            'w-full': route === '/dashboard' || route === '/auth-callback',
           }
         )}
       ></span>

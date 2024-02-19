@@ -32,6 +32,26 @@ export const appRouter = router({
 
     return { success: true };
   }),
+  getUserFiles: publicProcedure.query(() => {
+    return [
+      {
+        id: 1,
+        name: 'file name1',
+      },
+      {
+        id: 2,
+        name: 'file name2',
+      },
+      {
+        id: 3,
+        name: 'file name3',
+      },
+      {
+        id: 4,
+        name: 'file name4',
+      },
+    ];
+  }),
 });
 
 export type AppRouter = typeof appRouter;

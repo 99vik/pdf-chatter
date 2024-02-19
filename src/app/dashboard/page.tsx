@@ -20,7 +20,6 @@ export default async function Page() {
   return (
     <>
       <Dashboard />
-      <p>{JSON.stringify(user)}</p>
     </>
   );
 }
