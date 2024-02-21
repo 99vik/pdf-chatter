@@ -16,7 +16,7 @@ export default async function Page() {
         AI.
       </p>
       <Link
-        href="/dashboard"
+        href="/api/auth/login"
         className={buttonVariants({
           className: 'px-7 mt-6 w-fit',
         })}

@@ -17,9 +17,5 @@ export default async function Page() {
 
   if (!dbUser) redirect('/auth-callback');
 
-  return (
-    <>
-      <Dashboard />
-    </>
-  );
+  return <Dashboard />;
 }
