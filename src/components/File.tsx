@@ -11,20 +11,21 @@ export default function File({
   };
 }) {
   const { id, name } = props;
+
+  function toggleOutline() {
+    document.getElementById(String(id))?.classList.toggle('ring-1');
+  }
+
   return (
     <div
       id={String(id)}
-      className="bg-card rounded-lg py-3 px-3 shadow group transition"
+      className="bg-card rounded-lg py-3 px-3 shadow group transition ring-primary/50 ring-inset"
     >
       <Link
-        onMouseEnter={() =>
-          document.getElementById(String(id))?.classList.add('bg-orange-50')
-        }
-        onMouseLeave={(event) =>
-          document.getElementById(String(id))?.classList.remove('bg-orange-50')
-        }
+        onMouseEnter={toggleOutline}
+        onMouseLeave={toggleOutline}
         href={`/dashboard/${id}`}
-        className="border-b border-neutral-200 flex items-start gap-3 pb-2 group hover:text-zinc-500 transition"
+        className="border-b border-neutral-200 flex items-start gap-3 pb-2 group hover:text-zinc-600 transition"
       >
         <div className="bg-primary min-h-7 min-w-7 group-hover:bg-primary/80 transition flex items-center justify-center rounded-full">
           <FileText className="h-4 w-4 text-white " />

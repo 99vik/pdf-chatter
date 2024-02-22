@@ -5,16 +5,16 @@ import { Button } from './ui/button';
 import File from './File';
 import FileSKeleton from '@/app/dashboard/FileSkeleton';
 import { Ghost } from 'lucide-react';
+import UploadButton from './UploadButton';
 
 export default function Dashboard() {
   const { data: files, isLoading } = trpc.getUserFiles.useQuery();
-  console.log(files);
 
   return (
     <main className="px-4 sm:px-20 md:px-24 lg:px-40">
       <div className="flex items-center justify-between mt-16 pb-4 border-b border-zinc-200">
         <h1 className="font-semibold text-4xl text-zinc-700">Your files</h1>
-        <Button size="sm">Upload file</Button>
+        <UploadButton />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7 mt-4">
         {isLoading ? (
