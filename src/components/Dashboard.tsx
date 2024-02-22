@@ -1,7 +1,6 @@
 'use client';
 
 import { trpc } from '@/app/_trpc/client';
-import { Button } from './ui/button';
 import File from './File';
 import FileSKeleton from '@/app/dashboard/FileSkeleton';
 import { Ghost } from 'lucide-react';
@@ -22,7 +21,10 @@ export default function Dashboard() {
         ) : files && files.length !== 0 ? (
           <>
             {files.map((file) => (
-              <File key={file.id} props={file} />
+              <File
+                key={file.id}
+                file={{ ...file, createdAt: new Date(file.createdAt) }}
+              />
             ))}
           </>
         ) : (

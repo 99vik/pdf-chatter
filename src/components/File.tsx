@@ -1,16 +1,10 @@
 import { Clock, FileText, Trash } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from './ui/button';
-
-export default function File({
-  props,
-}: {
-  props: {
-    id: number;
-    name: string;
-  };
-}) {
-  const { id, name } = props;
+import { File } from '@prisma/client';
+import moment from 'moment';
+export default function File({ file }: { file: File }) {
+  const { id, name, createdAt } = file;
 
   function toggleOutline() {
     document.getElementById(String(id))?.classList.toggle('ring-1');
@@ -33,9 +27,10 @@ export default function File({
         <p className="text-lg truncate">{name}</p>
       </Link>
       <div className="flex justify-between items-center my-2 px-3 -mb-1">
-        <p className="text-sm text-zinc-500 flex items-center gap-1">
-          <Clock className="h-3 w-3" />1 day ago
-        </p>
+        <div className="text-sm text-zinc-500 flex items-center gap-2">
+          <Clock className="h-3 w-3" />
+          <p>{moment(createdAt).fromNow()}</p>
+        </div>
         <Button
           size="sm"
           variant="destructive"

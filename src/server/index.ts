@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { publicProcedure, router } from './trpc';
+import { authenticatedProcedure, publicProcedure, router } from './trpc';
 import { db } from '@/lib/prisma';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { TRPCError } from '@trpc/server';
@@ -32,25 +32,15 @@ export const appRouter = router({
 
     return { success: true };
   }),
-  getUserFiles: publicProcedure.query(() => {
-    return [
-      {
-        id: 1,
-        name: 'file name1',
+  getUserFiles: authenticatedProcedure.query(async ({ ctx }) => {
+    const { user } = ctx;
+
+    const files = await db.file.findMany({
+      where: {
+        userId: user.id,
       },
-      {
-        id: 2,
-        name: 'file name2',
-      },
-      {
-        id: 3,
-        name: 'file name3 file name3file name3',
-      },
-      {
-        id: 4,
-        name: 'file name4',
-      },
-    ];
+    });
+    return files;
   }),
 });
 
