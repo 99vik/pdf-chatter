@@ -1,10 +1,23 @@
-import { Clock, FileText, Trash } from 'lucide-react';
+'use client';
+
+import { Clock, FileText, Loader2, Trash } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from './ui/button';
 import { File } from '@prisma/client';
 import moment from 'moment';
+import { trpc } from '@/app/_trpc/client';
+import { cn } from '@/lib/utils';
 export default function File({ file }: { file: File }) {
   const { id, name, createdAt } = file;
+
+  const utils = trpc.useUtils();
+
+  const {
+    mutate: deleteFile,
+    isPending,
+    isSuccess,
+  } = trpc.deleteFile.useMutation();
+  if (isSuccess) utils.getUserFiles.invalidate();
 
   function toggleOutline() {
     document.getElementById(String(id))?.classList.toggle('ring-1');
@@ -13,7 +26,12 @@ export default function File({ file }: { file: File }) {
   return (
     <div
       id={String(id)}
-      className="bg-card rounded-lg py-3 px-3 shadow group transition ring-primary/50 ring-inset"
+      className={cn(
+        'bg-card rounded-lg py-3 px-3 shadow group transition ring-primary/50 ring-inset',
+        {
+          'pointer-events-none': isPending,
+        }
+      )}
     >
       <Link
         onMouseEnter={toggleOutline}
@@ -32,11 +50,17 @@ export default function File({ file }: { file: File }) {
           <p>{moment(createdAt).fromNow()}</p>
         </div>
         <Button
+          disabled={isPending}
           size="sm"
           variant="destructive"
           className="bg-red-100 hover:bg-red-200 w-20 h-8"
+          onClick={() => deleteFile({ id })}
         >
-          <Trash className="h-4 w-4 text-red-700 " />
+          {isPending ? (
+            <Loader2 className="size-4 animate-spin text-red-700" />
+          ) : (
+            <Trash className="h-4 w-4 text-red-700 " />
+          )}
         </Button>
       </div>
     </div>

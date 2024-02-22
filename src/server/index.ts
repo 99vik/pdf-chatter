@@ -42,6 +42,24 @@ export const appRouter = router({
     });
     return files;
   }),
+  deleteFile: authenticatedProcedure
+    .input(
+      z.object({
+        id: z.string().uuid(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      const file = await db.file.delete({
+        where: {
+          id: input.id,
+          userId: ctx.user.id,
+        },
+      });
+
+      return file;
+    }),
 });
 
 export type AppRouter = typeof appRouter;
