@@ -4,12 +4,18 @@ import { File, UploadCloud } from 'lucide-react';
 import { useState } from 'react';
 import Dropzone from 'react-dropzone';
 import { Progress } from './ui/progress';
+import { useUploadThing } from '@/lib/uploadthing';
 
 export default function DropZone() {
   const [file, setFile] = useState<File | null>(null);
+  const { startUpload } = useUploadThing('pdfUploader', {
+    onUploadError: (err) => console.log(err.message),
+  });
 
-  function handleDrop(acceptedFile: File) {
+  async function handleDrop(acceptedFile: File) {
     setFile(acceptedFile);
+    const res = await startUpload([acceptedFile]);
+    console.log(res);
   }
 
   return (
@@ -24,19 +30,10 @@ export default function DropZone() {
             {...getRootProps()}
           >
             <input {...getInputProps()} />
-            <UploadCloud
-              className="text-zinc-500 -translate-y-3"
-              size={36}
-              strokeWidth={1}
-            />
-            <p className="text-zinc-600 -translate-y-3">
-              <span className="font-semibold">Click</span> or{' '}
-              <span className="font-semibold">drag</span> to upload a file.
-            </p>
-            {file && (
+
+            {file ? (
               <>
-                {console.log(file)}
-                <div className="absolute bottom-2 w-full flex flex-col items-center px-8">
+                <div className="w-full flex flex-col gap-2 items-center px-8">
                   <div className="border w-fit bg-white border-zinc-300 flex items-center justify-start px-3 gap-2 divide-x-2 divide-zinc-200 divide rounded-lg">
                     <File
                       size={18}
@@ -52,6 +49,18 @@ export default function DropZone() {
                     className="bg-zinc-300 border my-3 h-2"
                   />
                 </div>
+              </>
+            ) : (
+              <>
+                <UploadCloud
+                  className="text-zinc-500"
+                  size={36}
+                  strokeWidth={1}
+                />
+                <p className="text-zinc-600">
+                  <span className="font-semibold">Click</span> or{' '}
+                  <span className="font-semibold">drag</span> to upload a file.
+                </p>
               </>
             )}
           </div>

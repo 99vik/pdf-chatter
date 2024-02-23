@@ -21,6 +21,7 @@
     "@trpc/next": "^11.0.0-next-beta.289",
     "@trpc/react-query": "^11.0.0-next-beta.289",
     "@trpc/server": "^11.0.0-next-beta.289",
+    "@uploadthing/react": "^6.2.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-react": "^0.323.0",
@@ -32,6 +33,7 @@
     "react-dropzone": "^14.2.3",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
+    "uploadthing": "^6.4.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {

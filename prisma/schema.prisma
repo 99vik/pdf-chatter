@@ -31,7 +31,11 @@ model File {
   id           String       @id @default(uuid())
   name         String
   uploadStatus UploadStatus @default(PROCESSING)
-  createdAt    DateTime     @default(now())
+
+  url String
+  key String
+
+  createdAt DateTime @default(now())
 
   User   User?   @relation(fields: [userId], references: [id])
   userId String?
