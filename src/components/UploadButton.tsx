@@ -1,3 +1,4 @@
+import DropZone from './FileDropzone';
 import { Button } from './ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 
@@ -8,7 +9,7 @@ export default function UploadButton() {
         <Button size="sm">Upload file</Button>
       </DialogTrigger>
       <DialogContent>
-        <p>upload here</p>
+        <DropZone />
       </DialogContent>
     </Dialog>
   );

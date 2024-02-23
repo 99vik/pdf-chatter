@@ -49,8 +49,6 @@ export const appRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
       const file = await db.file.delete({
         where: {
           id: input.id,
