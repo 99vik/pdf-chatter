@@ -25,29 +25,22 @@ export const ourFileRouter = {
           name: files[0].name,
         },
       });
-      console.log('________________________');
-      console.log(sameFile);
-      console.log(user);
-      console.log(files[0]);
+
       if (sameFile) throw new UploadThingError('File already exists');
-      throw new UploadThingError('Unauthorized');
+
       return { userId: user.id };
     })
-    .onUploadComplete(({ metadata, file }) => {
-      console.log('ut core');
-      console.log(metadata);
-      console.log(file);
+    .onUploadComplete(async ({ metadata, file }) => {
+      const createdFile = await db.file.create({
+        data: {
+          name: file.name,
+          userId: metadata.userId,
+          url: file.url,
+          key: file.key,
+        },
+      });
       return { status: 'Success' };
     }),
-  // .onUploadComplete(async ({ metadata, file }) => {
-  //   // This code RUNS ON YOUR SERVER after upload
-  //   console.log("Upload complete for userId:", metadata.userId);
-
-  //   console.log("file url", file.url);
-
-  //   // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
-  //   return { uploadedBy: metadata.userId };
-  // }),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;

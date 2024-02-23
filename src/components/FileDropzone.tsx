@@ -5,17 +5,24 @@ import { useState } from 'react';
 import Dropzone from 'react-dropzone';
 import { Progress } from './ui/progress';
 import { useUploadThing } from '@/lib/uploadthing';
+import { useToast } from './ui/use-toast';
 
 export default function DropZone() {
   const [file, setFile] = useState<File | null>(null);
+  const { toast } = useToast();
   const { startUpload } = useUploadThing('pdfUploader', {
-    onUploadError: (err) => console.log(err.message),
+    onUploadError: (err) => {
+      toast({
+        variant: 'destructive',
+        title: 'Error uploading PDF.',
+        description: err.message,
+      });
+    },
   });
 
   async function handleDrop(acceptedFile: File) {
     setFile(acceptedFile);
     const res = await startUpload([acceptedFile]);
-    console.log(res);
   }
 
   return (
