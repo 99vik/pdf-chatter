@@ -1,13 +1,12 @@
 import { LoginLink } from '@kinde-oss/kinde-auth-nextjs/components';
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import Link from 'next/link';
 import { Button } from './ui/button';
 import UserMenu from './UserMenu';
 import DashboardLink from './DashboardLink';
+import { kindeAuth } from '@/lib/kindeAuth';
 
 export default async function Navbar() {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  const user = await kindeAuth();
 
   return (
     <nav className="w-full flex items-center justify-between py-3 px-4 sm:px-20 bg-white shadow">

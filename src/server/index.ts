@@ -1,13 +1,12 @@
 import { z } from 'zod';
 import { authenticatedProcedure, publicProcedure, router } from './trpc';
 import { db } from '@/lib/prisma';
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { TRPCError } from '@trpc/server';
+import { kindeAuth } from '@/lib/kindeAuth';
 
 export const appRouter = router({
   authCallback: publicProcedure.query(async () => {
-    const { getUser } = getKindeServerSession();
-    const user = await getUser();
+    const user = await kindeAuth();
 
     if (!user || !user.email) throw new TRPCError({ code: 'UNAUTHORIZED' });
 
@@ -32,23 +31,6 @@ export const appRouter = router({
 
     return { success: true };
   }),
-  getFile: authenticatedProcedure
-    .input(
-      z.object({
-        id: z.string().uuid(),
-      })
-    )
-    .query(async ({ ctx, input }) => {
-      const { user } = ctx;
-
-      const files = await db.file.findFirst({
-        where: {
-          id: input.id,
-          userId: user.id,
-        },
-      });
-      return files;
-    }),
   getUserFiles: authenticatedProcedure.query(async ({ ctx }) => {
     const { user } = ctx;
 

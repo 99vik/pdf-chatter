@@ -26,8 +26,11 @@ export default function DropZone() {
       });
       setUploadStatus('error');
     },
-    onClientUploadComplete: () => {
+    onClientUploadComplete: (fileid) => {
       setUploadStatus('success');
+      setTimeout(() => {
+        router.push(`/dashboard/${fileid[0].serverData.fileId}`);
+      }, 600);
     },
   });
 
@@ -46,12 +49,8 @@ export default function DropZone() {
   async function handleDrop(acceptedFile: File) {
     setFile(acceptedFile);
     startLoadAnimation();
-    const delayPromise = await new Promise((res) => setTimeout(res, 3000));
-    // const res = await startUpload([acceptedFile]);
-    const res = '5b28a025-fa70-47fc-8d05-b8f35e3680aa';
-    setUploadStatus('success');
+    await startUpload([acceptedFile]);
     setUploadProgress(100);
-    console.log(router.push(`/dashboard/${res}`));
   }
 
   return (

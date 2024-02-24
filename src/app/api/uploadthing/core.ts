@@ -1,13 +1,12 @@
+import { kindeAuth } from '@/lib/kindeAuth';
 import { db } from '@/lib/prisma';
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
 import { UploadThingError } from 'uploadthing/server';
 
 const f = createUploadthing();
 
 const auth = async () => {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  const user = await kindeAuth();
 
   return user;
 };
