@@ -1,3 +1,5 @@
+import Chat from '@/components/Chat';
+import PdfRender from '@/components/PdfRender';
 import { kindeAuth } from '@/lib/kindeAuth';
 import { db } from '@/lib/prisma';
 import { notFound, redirect } from 'next/navigation';
@@ -25,8 +27,11 @@ export default async function Page({
   if (!file) notFound();
 
   return (
-    <div>
-      <p>{file.name}</p>
-    </div>
+    <>
+      <main className="grid grid-cols-5 h-[calc(100vh-61.6px)] ">
+        <PdfRender url={file.url} title={file.name} />
+        <Chat />
+      </main>
+    </>
   );
 }

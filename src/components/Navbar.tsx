@@ -9,7 +9,7 @@ export default async function Navbar() {
   const user = await kindeAuth();
 
   return (
-    <nav className="w-full flex items-center justify-between py-3 px-4 sm:px-20 bg-white shadow">
+    <nav className="w-full flex items-center justify-between py-3 px-4 sm:px-20 bg-white border border-zinc-200 shadow-sm ">
       <Link href="/">
         <p className="text-primary text-xl sm:text-lg font-bold">PDF chatter</p>
       </Link>
