@@ -39,7 +39,7 @@ export const ourFileRouter = {
           key: file.key,
         },
       });
-      return { status: 'Success' };
+      return { fileId: createdFile.id };
     }),
 } satisfies FileRouter;
 

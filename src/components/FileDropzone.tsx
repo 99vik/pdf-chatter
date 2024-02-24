@@ -1,15 +1,22 @@
 'use client';
 
-import { File, UploadCloud } from 'lucide-react';
+import { File, Loader2, UploadCloud } from 'lucide-react';
 import { useState } from 'react';
 import Dropzone from 'react-dropzone';
 import { Progress } from './ui/progress';
 import { useUploadThing } from '@/lib/uploadthing';
 import { useToast } from './ui/use-toast';
+import { useRouter } from 'next/navigation';
 
 export default function DropZone() {
   const [file, setFile] = useState<File | null>(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadStatus, setUploadStatus] = useState<'success' | 'error' | null>(
+    null
+  );
+  const router = useRouter();
   const { toast } = useToast();
+
   const { startUpload } = useUploadThing('pdfUploader', {
     onUploadError: (err) => {
       toast({
@@ -17,12 +24,34 @@ export default function DropZone() {
         title: 'Error uploading PDF.',
         description: err.message,
       });
+      setUploadStatus('error');
+    },
+    onClientUploadComplete: () => {
+      setUploadStatus('success');
     },
   });
 
+  function startLoadAnimation() {
+    const interval = setInterval(() => {
+      setUploadProgress((progress) => {
+        if (progress === 95 || progress === 100) {
+          clearInterval(interval);
+          return progress;
+        }
+        return progress + 5;
+      });
+    }, 500);
+  }
+
   async function handleDrop(acceptedFile: File) {
     setFile(acceptedFile);
-    const res = await startUpload([acceptedFile]);
+    startLoadAnimation();
+    const delayPromise = await new Promise((res) => setTimeout(res, 3000));
+    // const res = await startUpload([acceptedFile]);
+    const res = '5b28a025-fa70-47fc-8d05-b8f35e3680aa';
+    setUploadStatus('success');
+    setUploadProgress(100);
+    console.log(router.push(`/dashboard/${res}`));
   }
 
   return (
@@ -40,7 +69,7 @@ export default function DropZone() {
 
             {file ? (
               <>
-                <div className="w-full flex flex-col gap-2 items-center px-8">
+                <div className="w-full flex flex-col gap-4 items-center px-8">
                   <div className="border w-fit bg-white border-zinc-300 flex items-center justify-start px-3 gap-2 divide-x-2 divide-zinc-200 divide rounded-lg">
                     <File
                       size={18}
@@ -51,9 +80,34 @@ export default function DropZone() {
                       {file.name}
                     </p>
                   </div>
+                  {uploadStatus ? (
+                    uploadStatus === 'success' ? (
+                      <p className="font-semibold text-sm text-green-800 -mb-3 flex items-center gap-2">
+                        <Loader2 className="animate-spin" size={12} />
+                        Upload successful, redirecting..
+                      </p>
+                    ) : (
+                      <p className="font-semibold text-sm text-red-800 -mb-3 flex items-center gap-2">
+                        Upload failed.
+                      </p>
+                    )
+                  ) : (
+                    <p className="font-semibold text-sm text-zinc-600 -mb-3 flex items-center gap-2">
+                      <Loader2 className="animate-spin" size={12} />
+                      Uploading file..
+                    </p>
+                  )}
+
                   <Progress
-                    value={33}
-                    className="bg-zinc-300 border my-3 h-2"
+                    value={uploadProgress}
+                    color={
+                      uploadStatus
+                        ? uploadStatus === 'success'
+                          ? 'bg-green-600'
+                          : 'bg-red-600'
+                        : ''
+                    }
+                    className="bg-zinc-300 border h-2 "
                   />
                 </div>
               </>

@@ -32,6 +32,23 @@ export const appRouter = router({
 
     return { success: true };
   }),
+  getFile: authenticatedProcedure
+    .input(
+      z.object({
+        id: z.string().uuid(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { user } = ctx;
+
+      const files = await db.file.findFirst({
+        where: {
+          id: input.id,
+          userId: user.id,
+        },
+      });
+      return files;
+    }),
   getUserFiles: authenticatedProcedure.query(async ({ ctx }) => {
     const { user } = ctx;
 
