@@ -59,9 +59,9 @@ export default function DropZone() {
       onDrop={(acceptedFiles) => handleDrop(acceptedFiles[0])}
     >
       {({ getRootProps, getInputProps }) => (
-        <section className="p-6">
+        <section className="p-2 sm:p-5">
           <div
-            className="bg-zinc-100 border relative flex flex-col items-center gap-1 justify-center border-zinc-300 h-56 border-dashed rounded-xl "
+            className="bg-zinc-100 border relative flex flex-col items-center gap-1 justify-center border-zinc-300 sm:h-64 h-80 border-dashed rounded-xl"
             {...getRootProps()}
           >
             <input {...getInputProps()} />

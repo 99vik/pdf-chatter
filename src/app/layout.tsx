@@ -5,6 +5,9 @@ import Navbar from '@/components/Navbar';
 import { cn } from '@/lib/utils';
 import Provider from './_trpc/Provider';
 import { Toaster } from '@/components/ui/toaster';
+import 'react-pdf/dist/Page/TextLayer.css';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import 'simplebar-react/dist/simplebar.min.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
