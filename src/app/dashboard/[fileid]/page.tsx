@@ -27,11 +27,9 @@ export default async function Page({
   if (!file) notFound();
 
   return (
-    <>
-      <main className="grid grid-cols-5 h-[calc(100vh-61.6px)] ">
-        <PdfRender url={file.url} title={file.name} />
-        <Chat />
-      </main>
-    </>
+    <main className="grid grid-cols-5 h-[calc(100vh-61.6px)] ">
+      <PdfRender url={file.url} title={file.name} />
+      <Chat />
+    </main>
   );
 }
