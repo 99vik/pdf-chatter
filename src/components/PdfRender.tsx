@@ -28,12 +28,12 @@ export default function PdfRender({
           autoHide={false}
           className="flex-1 max-h-[calc(100vh-61.6px-28px-48.8px-25px)]"
         >
-          <div ref={ref}>
+          <div ref={ref} className="flex-1">
             <Document
               className=""
               file={url}
               loading={
-                <div className="flex justify-center bg-red-600">
+                <div className="bg-white flex justify-center items-center h-96">
                   <Loader2 size={40} className="text-primary animate-spin" />
                 </div>
               }

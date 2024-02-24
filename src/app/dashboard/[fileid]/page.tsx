@@ -3,6 +3,7 @@ import PdfRender from '@/components/PdfRender';
 import { kindeAuth } from '@/lib/kindeAuth';
 import { db } from '@/lib/prisma';
 import { notFound, redirect } from 'next/navigation';
+import Loading from './loading';
 
 export default async function Page({
   params,
@@ -27,7 +28,7 @@ export default async function Page({
   if (!file) notFound();
 
   return (
-    <main className="grid grid-cols-1 md:grid-cols-5 max-h-[calc(100vh-61.6px)] ">
+    <main className="grid grid-cols-1 md:grid-cols-5 max-h-[calc(100vh-61.6px)] sm:h-[calc(100vh-61.6px)]">
       <PdfRender url={file.url} title={file.name} />
       <Chat />
     </main>
