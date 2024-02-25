@@ -35,6 +35,7 @@ export default function PdfRender({
           setCurrentScale={setCurrentScale}
           currentScale={currentScale}
           setCurrentRotation={setCurrentRotation}
+          url={url}
         />
         <SimpleBar
           autoHide={false}
