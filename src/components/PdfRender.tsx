@@ -1,11 +1,11 @@
 'use client';
 
 import { Loader2 } from 'lucide-react';
-import PdfToolbar from './PdfToolbar';
 import { Document, Page, pdfjs } from 'react-pdf';
 import { useResizeDetector } from 'react-resize-detector';
 import SimpleBar from 'simplebar-react';
 import { useState } from 'react';
+import PdfToolbar from './PdfToolbar';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
@@ -18,6 +18,7 @@ export default function PdfRender({
 }) {
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [numPages, setNumPages] = useState<number>();
+  const [currentScale, setCurrentScale] = useState<number>(1);
   const { width, ref } = useResizeDetector();
 
   return (
@@ -30,6 +31,8 @@ export default function PdfRender({
           pageNumber={pageNumber}
           setPageNumber={setPageNumber}
           numPages={numPages}
+          setCurrentScale={setCurrentScale}
+          currentScale={currentScale}
         />
         <SimpleBar
           autoHide={false}
@@ -46,7 +49,12 @@ export default function PdfRender({
               }
             >
               <Page
-                scale={1}
+                loading={
+                  <div className="bg-white flex justify-center items-center h-96">
+                    <Loader2 size={40} className="text-primary animate-spin" />
+                  </div>
+                }
+                scale={currentScale}
                 width={width ? width : 1}
                 pageNumber={pageNumber}
               />
