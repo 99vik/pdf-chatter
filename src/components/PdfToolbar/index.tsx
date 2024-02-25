@@ -10,12 +10,14 @@ export default function PdfToolbar({
   numPages,
   setCurrentScale,
   currentScale,
+  setCurrentRotation,
 }: {
   setPageNumber: Dispatch<SetStateAction<number>>;
   pageNumber: number;
   numPages: number | undefined;
   setCurrentScale: Dispatch<SetStateAction<number>>;
   currentScale: number;
+  setCurrentRotation: Dispatch<SetStateAction<number>>;
 }) {
   return (
     <div className="border-b border-zinc-200 h-12 flex items-center justify-between px-3">
@@ -29,7 +31,7 @@ export default function PdfToolbar({
           setCurrentScale={setCurrentScale}
           currentScale={currentScale}
         />
-        <RotateControl />
+        <RotateControl setCurrentRotation={setCurrentRotation} />
         <FullscreenControl />
       </div>
     </div>

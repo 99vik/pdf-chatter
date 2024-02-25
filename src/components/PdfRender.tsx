@@ -19,6 +19,7 @@ export default function PdfRender({
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [numPages, setNumPages] = useState<number>();
   const [currentScale, setCurrentScale] = useState<number>(1);
+  const [currentRotatation, setCurrentRotation] = useState<number>(0);
   const { width, ref } = useResizeDetector();
 
   return (
@@ -33,6 +34,7 @@ export default function PdfRender({
           numPages={numPages}
           setCurrentScale={setCurrentScale}
           currentScale={currentScale}
+          setCurrentRotation={setCurrentRotation}
         />
         <SimpleBar
           autoHide={false}
@@ -54,6 +56,7 @@ export default function PdfRender({
                     <Loader2 size={40} className="text-primary animate-spin" />
                   </div>
                 }
+                rotate={currentRotatation}
                 scale={currentScale}
                 width={width ? width : 1}
                 pageNumber={pageNumber}
