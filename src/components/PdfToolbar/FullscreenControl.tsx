@@ -40,7 +40,7 @@ export default function FullscreenControl({
           <Expand strokeWidth={1.5} className="text-zinc-700" size={20} />
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-[calc(100vw-260px)] w-full ">
+      <DialogContent className="max-w-[90vw] md:max-w-[80vw] w-full ">
         <SimpleBar
           autoHide={false}
           className="flex-1 w-full max-h-[calc(100vh-100px)]"

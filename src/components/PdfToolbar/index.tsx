@@ -22,13 +22,13 @@ export default function PdfToolbar({
   url: string;
 }) {
   return (
-    <div className="border-b border-zinc-200 h-12 flex items-center justify-between px-3">
+    <div className="border-b border-zinc-200 h-12 flex items-center justify-between px-1 sm:px-3">
       <PageControl
         pageNumber={pageNumber}
         setPageNumber={setPageNumber}
         numPages={numPages}
       />
-      <div className="flex gap-2">
+      <div className="flex gap-0 sm:gap-2">
         <ZoomControl
           setCurrentScale={setCurrentScale}
           currentScale={currentScale}

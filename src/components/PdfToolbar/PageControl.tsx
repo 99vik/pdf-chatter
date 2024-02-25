@@ -41,7 +41,7 @@ export default function PageControl({
   };
 
   return (
-    <div className="flex justify-center items-center gap-2">
+    <div className="flex justify-center items-center gap-0 sm:gap-2">
       <Button
         className="px-2"
         disabled={pageNumber <= 1}
@@ -54,7 +54,7 @@ export default function PageControl({
       >
         <ChevronLeft size={20} />
       </Button>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1 sm:gap-2">
         <Input
           {...register('page')}
           className={cn('w-9 h-8 p-0 text-center', {
