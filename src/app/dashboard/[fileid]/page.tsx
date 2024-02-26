@@ -3,7 +3,6 @@ import PdfRender from '@/components/PdfRender';
 import { kindeAuth } from '@/lib/kindeAuth';
 import { db } from '@/lib/prisma';
 import { notFound, redirect } from 'next/navigation';
-import Loading from './loading';
 
 export default async function Page({
   params,

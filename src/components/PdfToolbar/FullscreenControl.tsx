@@ -41,10 +41,7 @@ export default function FullscreenControl({
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[90vw] md:max-w-[80vw] w-full ">
-        <SimpleBar
-          autoHide={false}
-          className="flex-1 w-full max-h-[calc(100vh-100px)]"
-        >
+        <SimpleBar autoHide={false} className="flex-1 w-full max-h-[85vh]">
           <div ref={ref}>
             <Document
               file={url}
