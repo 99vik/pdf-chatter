@@ -29,7 +29,7 @@ export default async function Page({
   return (
     <main className="grid grid-cols-1 md:grid-cols-5 max-h-[calc(100vh-61.6px)] sm:h-[calc(100vh-61.6px)]">
       <PdfRender url={file.url} title={file.name} />
-      <Chat />
+      <Chat fileid={file.id} />
     </main>
   );
 }
