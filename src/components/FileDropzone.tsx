@@ -30,7 +30,7 @@ export default function DropZone() {
       setUploadStatus('success');
       setTimeout(() => {
         router.push(`/dashboard/${fileid[0].serverData.fileId}`);
-      }, 600);
+      }, 700);
     },
   });
 
