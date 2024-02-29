@@ -1,27 +1,20 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import Message from './Message';
 import { useInView } from 'react-intersection-observer';
 import { Loader2 } from 'lucide-react';
-
-interface Message {
-  id: string;
-  body: string;
-  userId: string | null;
-  fileId: string | null;
-  createdAt: string;
-}
+import MessageType from './MessageType';
+import { ChatContext } from '.';
 
 export default function Messages({
-  messages,
   fetchNextPage,
   hasNextPage,
 }: {
-  messages: Message[] | undefined;
+  messages: MessageType[] | undefined;
   fetchNextPage: () => void;
   hasNextPage: boolean;
 }) {
   const [ref, inView] = useInView();
-
+  const { messages, addedMessages } = useContext(ChatContext);
   useEffect(() => {
     function nextPage() {
       if (inView && hasNextPage) fetchNextPage();
@@ -31,18 +24,25 @@ export default function Messages({
 
   if (!messages)
     return (
-      <div className="bg-white h-full flex-col col-span-2 border-l border-zinc-200 flex items-center justify-center">
+      <div className="bg-white h-full flex-col col-span-2 flex items-center justify-center">
         <Loader2 size={50} className="animate-spin text-primary" />
       </div>
     );
 
-  const messagesDisplayed = messages.map((message) => (
+  let messagesDisplayed = messages.map((message) => (
     <Message
       key={message.id}
       message={{ ...message, createdAt: new Date(message.createdAt) }}
     />
   ));
 
+  if (addedMessages) {
+    const displayedAddedeMessages = addedMessages.map((message, index) => (
+      // @ts-ignore
+      <Message key={index} message={addedMessages[index]} />
+    ));
+    messagesDisplayed.unshift(...displayedAddedeMessages);
+  }
   return (
     <>
       {messagesDisplayed}

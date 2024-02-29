@@ -25,16 +25,26 @@ export default function Message({ message }: { message: Message }) {
           message.userId ? 'bg-primary -ml-1' : 'bg-zinc-200/70 -mr-1'
         )}
       />
-      <p
-        className={cn(
-          'rounded-t-lg px-4 py-2 w-fit ',
-          message.userId
-            ? 'bg-primary text-white self-end rounded-bl-lg ml-3'
-            : 'bg-zinc-200/70 rounded-br-lg mr-3'
-        )}
-      >
-        {message.body}
-      </p>
+      {message.body ? (
+        <p
+          className={cn(
+            'rounded-t-lg px-4 py-2 w-fit',
+            message.userId
+              ? 'bg-primary text-white self-end rounded-bl-lg ml-3'
+              : 'bg-zinc-200/70 rounded-br-lg mr-3'
+          )}
+        >
+          {message.body}
+        </p>
+      ) : (
+        <>
+          <div className="flex gap-2 items-center rounded-t-lg px-4 py-2 w-fit bg-zinc-200/70 rounded-br-lg mr-3">
+            <div className="h-2 my-1 aspect-square rounded-full bg-primary animate-bounce" />
+            <div className="h-2 aspect-square rounded-full bg-primary animate-bounce delay-150" />
+            <div className="h-2 aspect-square rounded-full bg-primary animate-bounce delay-300" />
+          </div>
+        </>
+      )}
     </div>
   );
 }
