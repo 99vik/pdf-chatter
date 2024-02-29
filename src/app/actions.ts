@@ -43,6 +43,13 @@ export async function sendMessage(formData: FormData) {
 
   if (!file) return { error: 'File does not exist.' };
 
+  const newUserMessage = await db.message.create({
+    data: {
+      body: data.message,
+      userId: user.id,
+      fileId: file.id,
+    },
+  });
   const pinecone = new Pinecone();
   const pineconeIndex = pinecone.Index(process.env.PINECONE_INDEX!);
 
@@ -70,6 +77,13 @@ export async function sendMessage(formData: FormData) {
   const answer = await ragChain.invoke({
     question: data.message,
     context: results,
+  });
+
+  const newAiMessage = await db.message.create({
+    data: {
+      body: answer,
+      fileId: file.id,
+    },
   });
 
   console.log(answer);

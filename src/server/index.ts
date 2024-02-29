@@ -41,6 +41,32 @@ export const appRouter = router({
     });
     return files;
   }),
+  getFileMessages: authenticatedProcedure
+    .input(
+      z.object({
+        id: z.string().uuid(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { user } = ctx;
+
+      const file = await db.file.findFirst({
+        where: {
+          id: input.id,
+          userId: user.id,
+        },
+      });
+
+      if (!file) throw new TRPCError({ code: 'NOT_FOUND' });
+
+      const messages = await db.message.findMany({
+        where: {
+          fileId: file.id,
+        },
+      });
+
+      return messages;
+    }),
   deleteFile: authenticatedProcedure
     .input(
       z.object({
