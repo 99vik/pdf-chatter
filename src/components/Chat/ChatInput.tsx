@@ -3,20 +3,21 @@
 import { Send } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Textarea } from '../ui/textarea';
-import { sendMessage } from '@/app/actions';
-import { useFormStatus } from 'react-dom';
 import { useContext, useRef, useState } from 'react';
 import { ChatContext } from '.';
+import { trpc } from '@/app/_trpc/client';
+import { useToast } from '../ui/use-toast';
 
-const initialState = {
-  message: '',
-};
-
-function SubmitButton({ inputLength }: { inputLength: number }) {
-  const { pending } = useFormStatus();
+function SubmitButton({
+  inputLength,
+  isPending,
+}: {
+  inputLength: number;
+  isPending: boolean;
+}) {
   return (
     <Button
-      disabled={pending || inputLength === 0}
+      disabled={isPending || inputLength === 0}
       type="submit"
       size="sm"
       className="absolute right-2 bottom-2 "
@@ -28,30 +29,40 @@ function SubmitButton({ inputLength }: { inputLength: number }) {
 
 export default function ChatInput({ fileid }: { fileid: string }) {
   const [inputLength, setInputLength] = useState(0);
-  const [waitingResponse, setWaitingResponse] = useState(false);
   const ref = useRef<HTMLTextAreaElement | null>(null);
   const { refreshMessages, simulateMessageResponse } = useContext(ChatContext);
+  const { toast } = useToast();
+
+  const { mutate: send, isPending } = trpc.sendMessage.useMutation({
+    onSuccess: () => refreshMessages(),
+    onError: () => {
+      toast({
+        variant: 'destructive',
+        title: 'Uh oh! Something went wrong.',
+        description: 'There was a problem processing your message.',
+      });
+      refreshMessages();
+    },
+  });
 
   async function handleSendMessage(data: FormData) {
-    setWaitingResponse(true);
+    const message = data.get('messageInput') as string;
+    simulateMessageResponse(data);
+    setInputLength(0);
     ref.current!.value = '';
-    // const res = await sendMessage(data);
-    // refreshMessages();
-    setWaitingResponse(false);
-    // console.log(res);
+
+    send({ fileid, message });
   }
   return (
     <div className="border-t p-2 sm:p-3 bg-neutral-50">
       <form
         action={(data) => {
-          simulateMessageResponse(data);
           handleSendMessage(data);
         }}
         className="relative"
       >
-        <input type="hidden" name="fileid" value={fileid} />
         <Textarea
-          disabled={waitingResponse}
+          disabled={isPending}
           ref={ref}
           onInput={(e) => {
             const target = e.target as HTMLInputElement;
@@ -71,7 +82,7 @@ export default function ChatInput({ fileid }: { fileid: string }) {
           autoFocus
           className="resize-none pr-14 scrollbar-thin scrollbar-primary "
         />
-        <SubmitButton inputLength={inputLength} />
+        <SubmitButton isPending={isPending} inputLength={inputLength} />
       </form>
     </div>
   );
