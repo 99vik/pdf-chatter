@@ -14,8 +14,11 @@ export default function Loading() {
           </div>
         </div>
       </div>
-      <div className="bg-white col-span-2 border-l border-zinc-200 flex items-center justify-center">
-        <Loader2 size={50} className="animate-spin text-primary" />
+      <div className="bg-white flex-col col-span-2 border-l border-zinc-200 flex">
+        <div className="flex-1 flex items-center justify-center">
+          <Loader2 size={50} className="animate-spin text-primary" />
+        </div>
+        <div className="border-t p-2 w-full sm:p-3 bg-neutral-50 h-[76.8px]" />
       </div>
     </div>
   );

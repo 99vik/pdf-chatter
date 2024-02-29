@@ -44,11 +44,15 @@ export const appRouter = router({
   getFileMessages: authenticatedProcedure
     .input(
       z.object({
+        limit: z.number().min(1).max(100).nullish(),
+        cursor: z.string().nullish(),
         id: z.string().uuid(),
       })
     )
     .query(async ({ ctx, input }) => {
       const { user } = ctx;
+      const limit = input.limit ?? 4;
+      const { cursor } = input;
 
       const file = await db.file.findFirst({
         where: {
@@ -60,12 +64,26 @@ export const appRouter = router({
       if (!file) throw new TRPCError({ code: 'NOT_FOUND' });
 
       const messages = await db.message.findMany({
+        take: limit + 1,
         where: {
           fileId: file.id,
         },
+        cursor: cursor ? { id: cursor } : undefined,
+        orderBy: {
+          createdAt: 'desc',
+        },
       });
 
-      return messages;
+      let nextCursor: typeof cursor | undefined = undefined;
+      if (messages.length > limit) {
+        const nextItem = messages.pop();
+        nextCursor = nextItem?.id;
+      }
+
+      return {
+        messages,
+        nextCursor,
+      };
     }),
   deleteFile: authenticatedProcedure
     .input(

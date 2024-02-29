@@ -1,4 +1,7 @@
+import { useEffect } from 'react';
 import Message from './Message';
+import { useInView } from 'react-intersection-observer';
+import { Loader2 } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -10,10 +13,28 @@ interface Message {
 
 export default function Messages({
   messages,
+  fetchNextPage,
+  hasNextPage,
 }: {
   messages: Message[] | undefined;
+  fetchNextPage: () => void;
+  hasNextPage: boolean;
 }) {
-  if (!messages) return <p>Loading</p>;
+  const [ref, inView] = useInView();
+
+  useEffect(() => {
+    function nextPage() {
+      if (inView && hasNextPage) fetchNextPage();
+    }
+    nextPage();
+  }, [inView, hasNextPage, fetchNextPage]);
+
+  if (!messages)
+    return (
+      <div className="bg-white h-full flex-col col-span-2 border-l border-zinc-200 flex items-center justify-center">
+        <Loader2 size={50} className="animate-spin text-primary" />
+      </div>
+    );
 
   const messagesDisplayed = messages.map((message) => (
     <Message
@@ -22,5 +43,10 @@ export default function Messages({
     />
   ));
 
-  return <>{messagesDisplayed}</>;
+  return (
+    <>
+      {messagesDisplayed}
+      <div ref={ref} />
+    </>
+  );
 }

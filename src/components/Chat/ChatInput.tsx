@@ -5,7 +5,7 @@ import { Button } from '../ui/button';
 import { Textarea } from '../ui/textarea';
 import { sendMessage } from '@/app/actions';
 import { useFormStatus } from 'react-dom';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 const initialState = {
   message: '',
@@ -27,7 +27,9 @@ function SubmitButton({ inputLength }: { inputLength: number }) {
 
 export default function ChatInput({ fileid }: { fileid: string }) {
   const [inputLength, setInputLength] = useState(0);
+  const ref = useRef<HTMLTextAreaElement | null>(null);
   async function handleSendMessage(data: FormData) {
+    ref.current!.value = '';
     const res = await sendMessage(data);
     console.log(res);
   }
@@ -39,6 +41,7 @@ export default function ChatInput({ fileid }: { fileid: string }) {
       >
         <input type="hidden" name="fileid" value={fileid} />
         <Textarea
+          ref={ref}
           onInput={(e) => {
             const target = e.target as HTMLInputElement;
             setInputLength(target.value.length);

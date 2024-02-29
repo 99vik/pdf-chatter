@@ -7,12 +7,11 @@ import { Pinecone } from '@pinecone-database/pinecone';
 import { OpenAIEmbeddings } from '@langchain/openai';
 import { PineconeStore } from '@langchain/pinecone';
 import { ChatOpenAI } from '@langchain/openai';
-import { ChatPromptTemplate } from '@langchain/core/prompts';
-import { pull } from 'langchain/hub';
 import { createStuffDocumentsChain } from 'langchain/chains/combine_documents';
 import { StringOutputParser } from '@langchain/core/output_parsers';
 import { PromptTemplate } from '@langchain/core/prompts';
 import { promptTemplate } from '@/lib/promptTemplate';
+import { revalidatePath } from 'next/cache';
 
 const inputSchema = z.object({
   fileid: z.string().uuid(),
@@ -85,8 +84,6 @@ export async function sendMessage(formData: FormData) {
       fileId: file.id,
     },
   });
-
-  console.log(answer);
 
   return { data };
 }
