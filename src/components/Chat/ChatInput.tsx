@@ -34,7 +34,10 @@ export default function ChatInput({ fileid }: { fileid: string }) {
   const { toast } = useToast();
 
   const { mutate: send, isPending } = trpc.sendMessage.useMutation({
-    onSuccess: () => refreshMessages(),
+    onSuccess: () => {
+      console.log('done');
+      refreshMessages();
+    },
     onError: () => {
       toast({
         variant: 'destructive',

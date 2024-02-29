@@ -9,8 +9,13 @@ import { PineconeStore } from '@langchain/pinecone';
 import { ChatOpenAI } from '@langchain/openai';
 import { createStuffDocumentsChain } from 'langchain/chains/combine_documents';
 import { StringOutputParser } from '@langchain/core/output_parsers';
-import { PromptTemplate } from '@langchain/core/prompts';
-import { promptTemplate } from '@/lib/promptTemplate';
+import {
+  ChatPromptTemplate,
+  MessagesPlaceholder,
+  PromptTemplate,
+} from '@langchain/core/prompts';
+import { AIMessage, HumanMessage } from '@langchain/core/messages';
+import promptTemplate from '@/lib/promptTemplate';
 
 export const appRouter = router({
   authCallback: publicProcedure.query(async () => {
@@ -126,6 +131,23 @@ export const appRouter = router({
 
       if (!file) throw new TRPCError({ code: 'NOT_FOUND' });
 
+      const previousMessages = await db.message.findMany({
+        where: {
+          fileId: file.id,
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+        take: 6,
+      });
+
+      let chatHistory: String[] = [];
+      previousMessages.map((message) =>
+        message.userId
+          ? chatHistory.push(`Human: ${message.body}\n`)
+          : chatHistory.push(`Assistant: ${message.body}\n`)
+      );
+
       const newUserMessage = await db.message.create({
         data: {
           body: input.message,
@@ -153,7 +175,10 @@ export const appRouter = router({
         modelName: 'gpt-3.5-turbo',
         temperature: 0,
       });
-      const customRagPrompt = PromptTemplate.fromTemplate(promptTemplate);
+
+      const customRagPrompt = PromptTemplate.fromTemplate(
+        promptTemplate(chatHistory)
+      );
 
       const ragChain = await createStuffDocumentsChain({
         llm,

@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import Message from './Message';
 import { useInView } from 'react-intersection-observer';
-import { Loader2 } from 'lucide-react';
+import { Bot, Loader2 } from 'lucide-react';
 import MessageType from './MessageType';
 import { ChatContext } from '.';
 
@@ -45,7 +45,14 @@ export default function Messages({
   }
   return (
     <>
-      {messagesDisplayed}
+      {messagesDisplayed.length !== 0 ? (
+        messagesDisplayed
+      ) : (
+        <div className="flex-1 flex flex-col justify-center items-center">
+          <Bot className="text-zinc-400 mb-1" strokeWidth={1.25} size={50} />
+          <p className="text-zinc-400 font-semibold">How can I assist you?.</p>
+        </div>
+      )}
       <div ref={ref} />
     </>
   );
