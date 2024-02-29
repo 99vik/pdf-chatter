@@ -18,7 +18,8 @@ model User {
   email       String      @unique
   uploadLimit UploadLimit @default(NORMAL)
 
-  File File[]
+  File    File[]
+  Message Message[]
 }
 
 enum UploadStatus {
@@ -35,8 +36,22 @@ model File {
   url String
   key String
 
-  createdAt DateTime @default(now())
+  Message Message[]
 
   User   User?   @relation(fields: [userId], references: [id])
   userId String?
+
+  createdAt DateTime @default(now())
+}
+
+model Message {
+  id   String @id @default(uuid())
+  body String @db.Text
+
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
+  File   File?   @relation(fields: [fileId], references: [id])
+  fileId String?
+
+  createdAt DateTime @default(now())
 }

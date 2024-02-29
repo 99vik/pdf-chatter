@@ -44,7 +44,7 @@ export default function ChatInput({ fileid }: { fileid: string }) {
             setInputLength(target.value.length);
           }}
           name="messageInput"
-          placeholder="Ask a question about document..."
+          placeholder="Ask a question about the document..."
           maxRows={8}
           rows={2}
           autoFocus
