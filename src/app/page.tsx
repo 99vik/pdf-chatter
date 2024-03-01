@@ -1,5 +1,6 @@
 import { buttonVariants } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export default async function Page() {
@@ -28,13 +29,22 @@ export default async function Page() {
         <div
           style={{
             clipPath:
-              'polygon(59% 59%, 34% 0, 99% 20%, 96% 80%, 47% 100%, 0 91%)',
+              'polygon(55% 0, 100% 26%, 72% 55%, 100% 100%, 0 100%, 21% 33%)',
           }}
-          className="h-[400px] md:h-[500px] lg:h-[600px] opacity-30 aspect-square absolute -translate-y-[30%] right-[4%] bg-gradient-to-b from-primary from-55% to-green-400"
+          className="h-[400px] md:h-[500px] lg:h-[600px] opacity-25 aspect-square absolute -translate-y-[40%] right-[1%] bg-gradient-to-b from-primary from-55% to-green-400"
         ></div>
       </div>
-      <div className="w-full max-w-screen-2xl">
-        <h2 className="text-xl sm:text-3xl font-bold text-left text-zinc-800 px-1 sm:px-6 mt-16">
+      <div className="my-10 rounded-xl bg-zinc-500/20 p-3 max-w-[98%] sm:max-w-[85%] lg:max-w-[70%]">
+        <Image
+          src="/FinishedApp.png"
+          width={1920}
+          height={879}
+          alt="Finished application"
+          className="rounded-md"
+        />
+      </div>
+      <div className="w-full lg:w-[70%] max-w-screen-2xl mb-10 px-2 md:px-0">
+        <h2 className="text-xl sm:text-3xl font-bold text-left text-zinc-800 px-1 sm:px-6 mt-2">
           Start chatting with your file in minutes.
         </h2>
         <ul className="w-full text-left px-1 sm:px-6 ">
@@ -51,9 +61,6 @@ export default async function Page() {
             <p className="text-lg font-semibold">Start asking questions</p>
           </li>
         </ul>
-      </div>
-      <div className="my-10">
-        <p>finished app pic here</p>
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ export default async function Page() {
 
   if (!dbUser) redirect('/auth-callback');
   return (
-    <main className="max-w-screen-2xl flex flex-col px-4 sm:px-20 md:px-24 lg:px-40">
+    <main className="max-w-screen-2xl flex flex-col px-4 sm:px-20 md:px-24 lg:px-40 2xl:mx-auto">
       <div className="flex gap-3 items-center justify-start mt-16 pb-4 border-b border-zinc-200">
         <CircleUser size={70} strokeWidth={1.25} className="text-zinc-700" />
         <h1 className="font-semibold text-4xl text-zinc-700">

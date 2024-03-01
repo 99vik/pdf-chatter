@@ -27,7 +27,7 @@ export default function RequestButton({
           )}
         </Button>
       ) : (
-        <Button disabled size="lg">
+        <Button disabled size="lg" className="bg-primary/85">
           Upgraded plan request sent
         </Button>
       )}

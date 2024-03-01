@@ -14,7 +14,7 @@ export default function Dashboard({
   const { data: files, isLoading } = trpc.getUserFiles.useQuery();
 
   return (
-    <main className="px-4 sm:px-20 md:px-24 lg:px-40">
+    <main className="px-4 sm:px-20 md:px-24 lg:px-40 max-w-screen-2xl 2xl:mx-auto">
       <div className="flex items-center justify-between mt-16 pb-4 border-b border-zinc-200">
         <h1 className="font-semibold text-4xl text-zinc-700">Your files</h1>
 

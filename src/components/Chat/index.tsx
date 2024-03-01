@@ -58,7 +58,7 @@ export default function Chat({ fileid }: { fileid: string }) {
         simulateMessageResponse,
       }}
     >
-      <div className="bg-white flex flex-col col-span-2 border-l border-zinc-200 max-h-[calc(70vh)] md:max-h-[calc(100vh-61.6px)]">
+      <div className="bg-white flex flex-col col-span-2 border-l border-t-2 md:border-t-0 border-zinc-200 max-h-[calc(70vh)] md:max-h-[calc(100vh-61.6px)]">
         <div className="flex-1 p-1 sm:p-3 flex flex-col-reverse gap-4 overflow-y-scroll scrollbar-thin scrollbar-primary">
           <Messages
             messages={messages}

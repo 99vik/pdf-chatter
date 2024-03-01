@@ -23,7 +23,7 @@ export default function PdfRender({
   const { width, ref } = useResizeDetector();
 
   return (
-    <div className="col-span-3 flex flex-col">
+    <div className="col-span-3 flex flex-col mb-16 md:mb-0">
       <h1 className="text-lg text-nowrap max-w-[70%] truncate self-center my-1 text-center text-zinc-600 font-semibold">
         {title.replace('.pdf', '')}
       </h1>
