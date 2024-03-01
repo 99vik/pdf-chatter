@@ -5,6 +5,7 @@ import { kindeAuth } from '@/lib/kindeAuth';
 import { db } from '@/lib/prisma';
 import { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
+import Loading from './loading';
 
 export const metadata: Metadata = {
   title: 'File',

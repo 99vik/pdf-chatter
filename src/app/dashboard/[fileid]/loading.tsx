@@ -2,8 +2,8 @@ import { Loader2 } from 'lucide-react';
 
 export default function Loading() {
   return (
-    <div className="grid grid-cols-5 h-[calc(100vh-61.6px)] ">
-      <div className="col-span-3 flex flex-col">
+    <div className="grid grid-cols-1 md:grid-cols-5 h-[calc(100vh-61.6px)] sm:h-[calc(100vh-61.6px)]">
+      <div className="col-span-3 flex flex-col mb-16 md:mb-0">
         <h1 className="text-lg my-1 h-[28px]"></h1>
         <div className="bg-white flex-1 mx-6 mb-3 rounded-lg border border-zinc-200 shadow-lg flex flex-col">
           <div className="border-b border-zinc-200 p-3 h-[48.8px]"></div>
