@@ -125,11 +125,15 @@ export const appRouter = router({
       });
 
       let chatHistory: String[] = [];
-      previousMessages.map((message) =>
-        message.userId
-          ? chatHistory.push(`Human: ${message.body}\n`)
-          : chatHistory.push(`Assistant: ${message.body}\n`)
-      );
+      if (previousMessages.length > 4) {
+        previousMessages.map((message) =>
+          message.userId
+            ? chatHistory.push(`Human: ${message.body}\n`)
+            : chatHistory.push(`Assistant: ${message.body}\n`)
+        );
+      } else {
+        chatHistory.push('No previous conversations.');
+      }
 
       const newUserMessage = await db.message.create({
         data: {
