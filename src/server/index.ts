@@ -13,32 +13,6 @@ import { PromptTemplate } from '@langchain/core/prompts';
 import promptTemplate from '@/lib/promptTemplate';
 
 export const appRouter = router({
-  authCallback: publicProcedure.query(async () => {
-    const user = await kindeAuth();
-
-    if (!user || !user.email) throw new TRPCError({ code: 'UNAUTHORIZED' });
-
-    const dbUser = await db.user.findFirst({
-      where: {
-        id: user.id,
-      },
-    });
-
-    if (dbUser) return { success: true };
-
-    try {
-      await db.user.create({
-        data: {
-          id: user.id,
-          email: user.email,
-        },
-      });
-    } catch (error) {
-      throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR' });
-    }
-
-    return { success: true };
-  }),
   requestPlanUpgrade: authenticatedProcedure.mutation(async ({ ctx }) => {
     const { user } = ctx;
 

@@ -11,15 +11,26 @@ export const metadata: Metadata = {
 export default async function Page() {
   const user = await kindeAuth();
 
-  if (!user) redirect('/api/auth/login');
+  if (!user || !user.email) redirect('/api/auth/login');
 
-  const dbUser = await db.user.findFirst({
+  let dbUser = await db.user.findFirst({
     where: {
       id: user.id,
     },
   });
 
-  if (!dbUser) redirect('/auth-callback');
+  if (!dbUser)
+    try {
+      dbUser = await db.user.create({
+        data: {
+          id: user.id,
+          email: user.email,
+        },
+      });
+    } catch (error) {
+      console.log('ERROR');
+      redirect('/');
+    }
 
   return <Dashboard userUploadLimit={dbUser.uploadLimit} />;
 }
