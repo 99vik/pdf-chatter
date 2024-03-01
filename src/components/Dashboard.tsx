@@ -6,16 +6,25 @@ import FileSKeleton from '@/app/dashboard/FileSkeleton';
 import { Ghost } from 'lucide-react';
 import UploadButton from './UploadButton';
 
-export default function Dashboard() {
+export default function Dashboard({
+  userUploadLimit,
+}: {
+  userUploadLimit: 'NORMAL' | 'PENDING' | 'VIP';
+}) {
   const { data: files, isLoading } = trpc.getUserFiles.useQuery();
 
   return (
     <main className="px-4 sm:px-20 md:px-24 lg:px-40">
       <div className="flex items-center justify-between mt-16 pb-4 border-b border-zinc-200">
         <h1 className="font-semibold text-4xl text-zinc-700">Your files</h1>
-        <UploadButton />
+
+        <UploadButton userUploadLimit={userUploadLimit} />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7 mt-4">
+      <p className=" text-xs w-fit mt-1 ml-auto text-zinc-400 py-1 px-3 rounded-lg">
+        {isLoading ? '-' : files?.length} /{' '}
+        {userUploadLimit === 'VIP' ? '8' : '4'} Files uploaded
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7 mt-1">
         {isLoading ? (
           <FileSKeleton />
         ) : files && files.length !== 0 ? (

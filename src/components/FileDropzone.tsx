@@ -8,7 +8,11 @@ import { useUploadThing } from '@/lib/uploadthing';
 import { useToast } from './ui/use-toast';
 import { useRouter } from 'next/navigation';
 
-export default function DropZone() {
+export default function DropZone({
+  userUploadLimit,
+}: {
+  userUploadLimit: 'NORMAL' | 'PENDING' | 'VIP';
+}) {
   const [file, setFile] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadStatus, setUploadStatus] = useState<'success' | 'error' | null>(
@@ -17,25 +21,28 @@ export default function DropZone() {
   const router = useRouter();
   const { toast } = useToast();
 
-  const { startUpload } = useUploadThing('pdfUploader', {
-    onUploadError: (err) => {
-      toast({
-        variant: 'destructive',
-        title: 'Error uploading PDF.',
-        description:
-          err.message === 'Unable to get presigned urls'
-            ? 'Your file is too big.'
-            : err.message,
-      });
-      setUploadStatus('error');
-    },
-    onClientUploadComplete: (fileid) => {
-      setUploadStatus('success');
-      setTimeout(() => {
-        router.push(`/dashboard/${fileid[0].serverData.fileId}`);
-      }, 700);
-    },
-  });
+  const { startUpload } = useUploadThing(
+    userUploadLimit !== 'VIP' ? 'pdfUploader' : 'upgradedPdfUploader',
+    {
+      onUploadError: (err) => {
+        toast({
+          variant: 'destructive',
+          title: 'Error uploading PDF.',
+          description:
+            err.message === 'Unable to get presigned urls'
+              ? 'Your file is too big.'
+              : err.message,
+        });
+        setUploadStatus('error');
+      },
+      onClientUploadComplete: (fileid) => {
+        setUploadStatus('success');
+        setTimeout(() => {
+          router.push(`/dashboard/${fileid[0].serverData.fileId}`);
+        }, 700);
+      },
+    }
+  );
 
   function startLoadAnimation() {
     const interval = setInterval(() => {
@@ -124,7 +131,9 @@ export default function DropZone() {
                   <span className="font-semibold">Click</span> or{' '}
                   <span className="font-semibold">drag</span> to upload a file.
                 </p>
-                <p className="text-zinc-400 text-sm">(Up to 2MB)</p>
+                <p className="text-zinc-400 text-sm">
+                  (Up to {userUploadLimit !== 'VIP' ? '2' : '8'}MB)
+                </p>
               </>
             )}
           </div>
