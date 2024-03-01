@@ -163,6 +163,10 @@ export const appRouter = router({
         promptTemplate(chatHistory)
       );
 
+      // console.log(chatHistory);
+      console.log('results: ', results);
+      console.log(customRagPrompt);
+
       const ragChain = await createStuffDocumentsChain({
         llm,
         prompt: customRagPrompt,

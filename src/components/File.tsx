@@ -17,6 +17,7 @@ export default function File({ file }: { file: File }) {
     isPending,
     isSuccess,
   } = trpc.deleteFile.useMutation();
+
   if (isSuccess) utils.getUserFiles.invalidate();
 
   function toggleOutline() {
@@ -50,13 +51,13 @@ export default function File({ file }: { file: File }) {
           <p>{moment(createdAt).fromNow()}</p>
         </div>
         <Button
-          disabled={isPending}
+          disabled={isPending || isSuccess}
           size="sm"
           variant="destructive"
           className="bg-red-100 hover:bg-red-200 w-20 h-8"
           onClick={() => deleteFile({ id })}
         >
-          {isPending ? (
+          {isPending || isSuccess ? (
             <Loader2 className="size-4 animate-spin text-red-700" />
           ) : (
             <Trash className="h-4 w-4 text-red-700 " />
