@@ -1,9 +1,13 @@
-import { Button } from '@/components/ui/button';
 import { kindeAuth } from '@/lib/kindeAuth';
 import { db } from '@/lib/prisma';
 import { CircleUser } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import RequestButton from './RequestButton';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Account',
+};
 
 export default async function Page() {
   const user = await kindeAuth();

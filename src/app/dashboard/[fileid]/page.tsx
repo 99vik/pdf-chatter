@@ -3,7 +3,12 @@ import FailedFileChat from '@/components/Chat/FailedFileChat';
 import PdfRender from '@/components/PdfRender';
 import { kindeAuth } from '@/lib/kindeAuth';
 import { db } from '@/lib/prisma';
+import { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
+
+export const metadata: Metadata = {
+  title: 'File',
+};
 
 export default async function Page({
   params,

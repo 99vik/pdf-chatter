@@ -6,7 +6,6 @@ import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
 import { Pinecone } from '@pinecone-database/pinecone';
 import { PineconeStore } from '@langchain/pinecone';
 import { OpenAIEmbeddings } from '@langchain/openai';
-import { File } from '@prisma/client';
 
 const f = createUploadthing();
 
