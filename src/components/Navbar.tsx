@@ -5,12 +5,13 @@ import UserMenu from './UserMenu';
 import DashboardLink from './DashboardLink';
 import { kindeAuth } from '@/lib/kindeAuth';
 import Image from 'next/image';
+import MobileMenu from './MobileMenu';
 
 export default async function Navbar() {
   const user = await kindeAuth();
 
   return (
-    <nav className="w-full flex items-center justify-between py-3 px-4 sm:px-20 bg-white border border-zinc-200 shadow-sm ">
+    <nav className="w-full relative z-40 bg-white flex items-center justify-between py-3 px-4 sm:px-20border border-zinc-200 shadow-sm ">
       <Link href="/" className="flex gap-1 items-center">
         <Image
           src="/logo.png"
@@ -27,13 +28,16 @@ export default async function Navbar() {
             <Button size="sm">Sign in</Button>
           </LoginLink>
         ) : (
-          <div className="flex justify-center items-center gap-6 sm:gap-10">
-            <DashboardLink />
-            <UserMenu
-              name={user.given_name! + ' ' + user.family_name!}
-              email={user.email!}
-            />
-          </div>
+          <>
+            <div className="hidden sm:flex justify-center items-center gap-6 sm:gap-10">
+              <DashboardLink />
+              <UserMenu
+                name={user.given_name! + ' ' + user.family_name!}
+                email={user.email!}
+              />
+            </div>
+            <MobileMenu />
+          </>
         )}
       </div>
     </nav>
