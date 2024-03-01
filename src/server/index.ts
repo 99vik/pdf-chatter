@@ -9,12 +9,7 @@ import { PineconeStore } from '@langchain/pinecone';
 import { ChatOpenAI } from '@langchain/openai';
 import { createStuffDocumentsChain } from 'langchain/chains/combine_documents';
 import { StringOutputParser } from '@langchain/core/output_parsers';
-import {
-  ChatPromptTemplate,
-  MessagesPlaceholder,
-  PromptTemplate,
-} from '@langchain/core/prompts';
-import { AIMessage, HumanMessage } from '@langchain/core/messages';
+import { PromptTemplate } from '@langchain/core/prompts';
 import promptTemplate from '@/lib/promptTemplate';
 
 export const appRouter = router({

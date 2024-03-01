@@ -13,7 +13,7 @@ export default function UploadButton({
         <Button size="sm">Upload file</Button>
       </DialogTrigger>
       <DialogContent>
-        <DropZone />
+        <DropZone userUploadLimit={userUploadLimit} />
       </DialogContent>
     </Dialog>
   );
