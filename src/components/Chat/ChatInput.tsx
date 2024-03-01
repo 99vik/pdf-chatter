@@ -35,7 +35,6 @@ export default function ChatInput({ fileid }: { fileid: string }) {
 
   const { mutate: send, isPending } = trpc.sendMessage.useMutation({
     onSuccess: () => {
-      console.log('done');
       refreshMessages();
     },
     onError: () => {

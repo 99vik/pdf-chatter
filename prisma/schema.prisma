@@ -10,6 +10,7 @@ datasource db {
 
 enum UploadLimit {
   NORMAL
+  PENDING
   VIP
 }
 

@@ -22,7 +22,10 @@ export default function DropZone() {
       toast({
         variant: 'destructive',
         title: 'Error uploading PDF.',
-        description: err.message,
+        description:
+          err.message === 'Unable to get presigned urls'
+            ? 'Your file is too big.'
+            : err.message,
       });
       setUploadStatus('error');
     },
@@ -121,6 +124,7 @@ export default function DropZone() {
                   <span className="font-semibold">Click</span> or{' '}
                   <span className="font-semibold">drag</span> to upload a file.
                 </p>
+                <p className="text-zinc-400 text-sm">(Up to 2MB)</p>
               </>
             )}
           </div>

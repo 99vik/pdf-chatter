@@ -24,7 +24,7 @@ export default function PdfRender({
 
   return (
     <div className="col-span-3 flex flex-col">
-      <h1 className="text-lg my-1 text-center text-zinc-600 font-semibold">
+      <h1 className="text-lg text-nowrap max-w-[70%] truncate self-center my-1 text-center text-zinc-600 font-semibold">
         {title.replace('.pdf', '')}
       </h1>
       <div className="bg-white flex-1 mx-2 sm:mx-4 lg:mx-6 mb-3 rounded-lg border border-zinc-200 shadow-lg flex flex-col">

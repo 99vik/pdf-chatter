@@ -4,13 +4,21 @@ import { Button } from './ui/button';
 import UserMenu from './UserMenu';
 import DashboardLink from './DashboardLink';
 import { kindeAuth } from '@/lib/kindeAuth';
+import Image from 'next/image';
 
 export default async function Navbar() {
   const user = await kindeAuth();
 
   return (
     <nav className="w-full flex items-center justify-between py-3 px-4 sm:px-20 bg-white border border-zinc-200 shadow-sm ">
-      <Link href="/">
+      <Link href="/" className="flex gap-1 items-center">
+        <Image
+          src="/logo.png"
+          width={128}
+          height={128}
+          alt="Logo"
+          className="h-[30px] w-[30px]"
+        />
         <p className="text-primary text-xl sm:text-lg font-bold">PDF chatter</p>
       </Link>
       <div className="flex gap-6 items-center">
