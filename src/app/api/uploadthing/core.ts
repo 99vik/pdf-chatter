@@ -49,6 +49,7 @@ async function uploadComplete({
     await PineconeStore.fromDocuments(
       docs,
       new OpenAIEmbeddings({
+        timeout: 5000,
         openAIApiKey: process.env.OPENAI_API_KEY,
       }),
       {
