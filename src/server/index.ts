@@ -39,6 +39,20 @@ export const appRouter = router({
 
     return { success: true };
   }),
+  requestPlanUpgrade: authenticatedProcedure.mutation(async ({ ctx }) => {
+    const { user } = ctx;
+
+    await db.user.update({
+      data: {
+        uploadLimit: 'PENDING',
+      },
+      where: {
+        id: user.id,
+      },
+    });
+
+    return { status: 'success' };
+  }),
   getUserFiles: authenticatedProcedure.query(async ({ ctx }) => {
     const { user } = ctx;
 
