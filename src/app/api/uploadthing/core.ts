@@ -42,7 +42,6 @@ async function uploadComplete({
     const blob = await res.blob();
     const loader = new PDFLoader(blob);
     const docs = await loader.load();
-    console.log(docs);
 
     const pinecone = new Pinecone();
     const pineconeIndex = pinecone.Index(process.env.PINECONE_INDEX!);
