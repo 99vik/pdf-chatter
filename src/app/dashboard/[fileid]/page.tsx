@@ -1,4 +1,5 @@
 import Chat from '@/components/Chat';
+import FailedFileChat from '@/components/Chat/FailedFileChat';
 import PdfRender from '@/components/PdfRender';
 import { kindeAuth } from '@/lib/kindeAuth';
 import { db } from '@/lib/prisma';
@@ -29,7 +30,11 @@ export default async function Page({
   return (
     <main className="grid grid-cols-1 md:grid-cols-5 max-h-[calc(100vh-61.6px)] sm:h-[calc(100vh-61.6px)]">
       <PdfRender url={file.url} title={file.name} />
-      <Chat fileid={file.id} />
+      {file.uploadStatus === 'SUCCESS' ? (
+        <Chat fileid={file.id} />
+      ) : (
+        <FailedFileChat />
+      )}
     </main>
   );
 }
