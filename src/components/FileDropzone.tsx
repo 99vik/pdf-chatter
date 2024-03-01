@@ -132,7 +132,7 @@ export default function DropZone({
                   <span className="font-semibold">drag</span> to upload a file.
                 </p>
                 <p className="text-zinc-400 text-sm">
-                  (Up to {userUploadLimit !== 'VIP' ? '2' : '8'}MB)
+                  (Up to {userUploadLimit !== 'VIP' ? '512KB' : '8MB'})
                 </p>
               </>
             )}

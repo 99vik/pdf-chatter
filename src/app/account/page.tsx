@@ -38,7 +38,7 @@ export default async function Page() {
           {dbUser.uploadLimit !== 'VIP' ? 'Normal ' : 'Upgraded '}
           <span className="text-sm text-zinc-500 ml-4">
             {dbUser.uploadLimit !== 'VIP'
-              ? ' (With a normal plan you can upload up to 4 files, max 2MB each)'
+              ? ' (With a normal plan you can upload up to 4 files, max 512KB each)'
               : ' (With a upgraded plan you can upload up to 8 files, max 8MB each)'}
           </span>
         </p>

@@ -49,7 +49,6 @@ async function uploadComplete({
     await PineconeStore.fromDocuments(
       docs,
       new OpenAIEmbeddings({
-        timeout: 5000,
         openAIApiKey: process.env.OPENAI_API_KEY,
       }),
       {
@@ -81,7 +80,7 @@ async function uploadComplete({
 }
 
 export const ourFileRouter = {
-  pdfUploader: f({ pdf: { maxFileSize: '2MB', maxFileCount: 1 } })
+  pdfUploader: f({ pdf: { maxFileSize: '512KB', maxFileCount: 1 } })
     .middleware(async ({ files }) => {
       const user = await auth();
 
